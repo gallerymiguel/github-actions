@@ -1,0 +1,37 @@
+name: Lint workflow
+
+#Trigger the workflow on push or pull request
+on: 
+    pull_request:
+        branches:
+            - develop
+            - staging
+            - main
+        
+# Jobs to run
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        # Steps in job
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            
+            - name: Use Node.js 21.x
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 21.x
+
+            - name: 🧰 Install Deps
+              run: npm install
+
+            - name: Run linting
+              run: npm run lint
+
+            - name: Run build
+              run: npm run build
+
+            - name: Run tests
+              run: npm run test
